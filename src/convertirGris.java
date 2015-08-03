@@ -52,11 +52,11 @@ public class convertirGris {
         }
         alto=bmp.getHeight();
         ancho=bmp.getWidth();
-        rgb=new Color[alto][ancho];
-        rojo=new int[alto][ancho];
-        verde=new int[alto][ancho];
-        azul=new int[alto][ancho];
-        gris=new int[alto][ancho];
+        rgb=new Color[ancho][alto];
+        rojo=new int[ancho][alto];
+        verde=new int[ancho][alto];
+        azul=new int[ancho][alto];
+        gris=new int[ancho][alto];
         //Asignamos la imagen cargada a la propiedad imageActual
         imageActual=bmp;
         //Retornamos el valor
@@ -66,7 +66,9 @@ public class convertirGris {
     public BufferedImage escalaGrises(){
         //Variables que almacenarán los píxeles
         int mediaPixel,colorSRGB;
+        
         Color colorAux;
+      
         
         //Recorremos la imagen píxel a píxel
         for( int i = 0; i < imageActual.getWidth(); i++ ){
@@ -83,13 +85,36 @@ public class convertirGris {
                 //Cambiamos a formato sRGB
                 colorSRGB=(mediaPixel << 16) | (mediaPixel << 8) | mediaPixel;
                 //Asignamos el nuevo valor al BufferedImage
-                imageActual.setRGB(i, j,colorSRGB);
+                
+                imageActual.setRGB(i, j, colorSRGB);
+                
+                
                 //System.out.println("gris: "+colorSRGB);
                 gris[i][j]=colorSRGB;
             }
         }
         //Retornamos la imagen
         return imageActual;
+    }
+    public static void main(String[] arre){
+        convertirGris prueba=new convertirGris();
+        prueba.abrirImagen();
+        prueba.escalaGrises();
+        int x=(int)((prueba.rojo[0][0]+prueba.verde[0][0]+prueba.azul[0][0])/3);
+        System.out.println("media primer pixel: "+x);
+        System.out.println(x<<16);
+        System.out.println(x<<8);
+        System.out.println(x);
+        System.out.println(x<<16 | x<<8 | x);
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                System.out.print(prueba.gris[j][i]+" ");
+            
+            }
+            System.out.println();
+        
+        }
+    
     }
 
     

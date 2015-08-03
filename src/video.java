@@ -20,6 +20,7 @@ public class video extends javax.swing.JFrame {
     
     public video() {
         initComponents();
+
        
     }
 
@@ -93,13 +94,10 @@ public class video extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         jLabel1.setIcon(new ImageIcon(imagen.escalaGrises()));
-        int [][] mat=imagen.verde;
-        for(int i=0;i<imagen.alto;i++){
-            for(int j=0;j<imagen.ancho;j++){
-                System.out.println(mat[i][j]);
-            }
-                    
-        }
+        
+        
+       
+        
       
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -136,6 +134,9 @@ public class video extends javax.swing.JFrame {
                 new video().setVisible(true);
             }
         });
+        
+       
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

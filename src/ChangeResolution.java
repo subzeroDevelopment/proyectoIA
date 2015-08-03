@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
-import java.awt.Dimension;
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamImageTransformer;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
-import com.github.sarxos.webcam.util.jh.JHGrayFilter;
+import javax.swing.JFrame;
+
 /**
  *
  * @author subzero
  */
-public class Prueba implements WebcamImageTransformer{
-    private static final JHGrayFilter GRAY = new JHGrayFilter();
-    public Prueba() {
+public class ChangeResolution {
+    public static void main(String [] args){
+        /**
+		 * When you set custom resolutions you have to be sure that your webcam
+		 * device will handle them!
+		 */
 
+		//@formatter:off
 		Dimension[] nonStandardResolutions = new Dimension[] {
 			WebcamResolution.PAL.getSize(),
 			WebcamResolution.HD720.getSize(),
@@ -33,9 +35,8 @@ public class Prueba implements WebcamImageTransformer{
 		Webcam webcam = Webcam.getDefault();
 		webcam.setCustomViewSizes(nonStandardResolutions);
 		webcam.setViewSize(WebcamResolution.HD720.getSize());
-                webcam.setImageTransformer(this);
 		webcam.open();
-		
+
 		JFrame window = new JFrame("Test Transformer");
 
 		WebcamPanel panel = new WebcamPanel(webcam);
@@ -46,22 +47,9 @@ public class Prueba implements WebcamImageTransformer{
 		window.pack();
 		window.setVisible(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-        
-    
-    
-        @Override
-	public BufferedImage transform(BufferedImage image) {
-		return GRAY.filter(image, null);
-	}
 
-	public static void main(String[] args) {
-		new Prueba();
-	}
-   
-
+	
     
+    
+    }
 }
-    
-
-
