@@ -18,7 +18,8 @@ import com.github.sarxos.webcam.util.jh.JHGrayFilter;
  * @author subzero
  */
 public class Prueba implements WebcamImageTransformer{
-    private static final JHGrayFilter GRAY = new JHGrayFilter();
+    private static final Binarizar GRAY = new Binarizar();
+    private static final JHGrayFilter gr = new JHGrayFilter();
     public Prueba() {
 
 		Dimension[] nonStandardResolutions = new Dimension[] {

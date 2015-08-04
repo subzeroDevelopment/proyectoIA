@@ -24,6 +24,9 @@ public class convertirGris {
        int[][] gris;
        int alto;
        int ancho;
+       int promedio=0;
+       int minimo=255;
+       int maximo=0;
      
     //Método que devuelve una imagen abierta desde archivo
     //Retorna un objeto BufferedImagen
@@ -35,7 +38,7 @@ public class convertirGris {
         //Le damos un título
         selector.setDialogTitle("Seleccione una imagen");
         //Filtramos los tipos de archivos
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG & GIF & BMP", "jpg", "gif", "bmp");
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG & GIF & BMP & PNG", "jpg", "gif", "bmp","png");
         selector.setFileFilter(filtroImagen);
         //Abrimos el cuadro de diálog
         int flag=selector.showOpenDialog(null);
@@ -65,7 +68,7 @@ public class convertirGris {
     
     public BufferedImage escalaGrises(){
         //Variables que almacenarán los píxeles
-        int mediaPixel,colorSRGB;
+        int mediaPixel,color;
         
         Color colorAux;
       
@@ -75,45 +78,42 @@ public class convertirGris {
             for( int j = 0; j < imageActual.getHeight(); j++ ){
                 //Almacenamos el color del píxel
                 colorAux=new Color(this.imageActual.getRGB(i, j));
-                rgb[i][j]=colorAux;
+                
                 //Calculamos la media de los tres canales (rojo, verde, azul)
                 mediaPixel=(int)((colorAux.getRed()+colorAux.getGreen()+colorAux.getBlue())/3);
                 rojo[i][j]=colorAux.getRed();
                 verde[i][j]=colorAux.getGreen();
                 azul[i][j]=colorAux.getBlue();
-                
+                promedio=promedio+mediaPixel;
+                if(mediaPixel>maximo)maximo=mediaPixel;
+                if(mediaPixel<minimo)minimo=mediaPixel;
                 //Cambiamos a formato sRGB
-                colorSRGB=(mediaPixel << 16) | (mediaPixel << 8) | mediaPixel;
+                int colorSRGB=(mediaPixel << 16) | (mediaPixel << 8) | mediaPixel;
                 //Asignamos el nuevo valor al BufferedImage
+                /*if(colorAux.getRed()<90 && colorAux.getRed()>59)imageActual.setRGB(i, j,0);
+                else{
+                    color=(255 << 16) | (255 << 8) | 255;
+                    imageActual.setRGB(i, j,color);
+                } */
                 
-                imageActual.setRGB(i, j, colorSRGB);
-                
-                
-                //System.out.println("gris: "+colorSRGB);
-                gris[i][j]=colorSRGB;
+                //System.out.println("gr
             }
         }
         //Retornamos la imagen
+        promedio=(int)promedio/(imageActual.getWidth()*imageActual.getHeight());
         return imageActual;
     }
     public static void main(String[] arre){
-        convertirGris prueba=new convertirGris();
-        prueba.abrirImagen();
-        prueba.escalaGrises();
-        int x=(int)((prueba.rojo[0][0]+prueba.verde[0][0]+prueba.azul[0][0])/3);
-        System.out.println("media primer pixel: "+x);
-        System.out.println(x<<16);
-        System.out.println(x<<8);
-        System.out.println(x);
-        System.out.println(x<<16 | x<<8 | x);
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                System.out.print(prueba.gris[j][i]+" ");
-            
-            }
-            System.out.println();
+        convertirGris img=new convertirGris();
+        img.abrirImagen();
+        img.escalaGrises();
+       
         
-        }
+        
+       
+        System.out.println("promedio:"+img.promedio);
+        System.out.println("maximo:"+img.maximo);
+        System.out.println("Minimo"+img.minimo);
     
     }
 
