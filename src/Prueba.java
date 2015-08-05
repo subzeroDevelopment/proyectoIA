@@ -7,7 +7,10 @@
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import java.awt.Dimension;
+import javax.swing.JLabel;
+import java.awt.FlowLayout;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamImageTransformer;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -25,15 +28,15 @@ public class Prueba implements WebcamImageTransformer, WebcamMotionListener{
     private static final JHGrayFilter gr = new JHGrayFilter();
     Regiones contar;
     Webcam webcam = Webcam.getDefault();
+    JLabel etiqueta=new JLabel();
+    ImageIcon [] imgs={new ImageIcon("0.jpg"),new ImageIcon("1.png"),new ImageIcon("2.png"),new ImageIcon("3.png"),
+                       new ImageIcon("4.jpg"),new ImageIcon("5.png"),new ImageIcon("6.jpg"),new ImageIcon("7.jpg"),
+                        new ImageIcon("8.png"),new ImageIcon("9.png"),new ImageIcon("10.png")};
     public Prueba() {
 
 	JFrame window=new JFrame("1,2,3.....");
-        
+        JFrame window2=new JFrame("Numero");
 		
-		//@formatter:on
-
-		// your camera have to support HD720p to run this code  
-        
         
         
         webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -49,8 +52,14 @@ public class Prueba implements WebcamImageTransformer, WebcamMotionListener{
         panel.setImageSizeDisplayed(true);
 	panel.setMirrored(true);
         
+        ImageIcon ico=imgs[0 ];
+        etiqueta.setIcon(ico);
          webcam.open();
+         
+       FlowLayout lay=new FlowLayout();
+         window.setLayout(lay);
         window.add(panel);
+        window.add(etiqueta);
 	window.setResizable(true);
 	window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	window.pack();
@@ -62,7 +71,8 @@ public class Prueba implements WebcamImageTransformer, WebcamMotionListener{
         @Override
 	public void motionDetected(WebcamMotionEvent wme) {
 		contar=new Regiones(webcam.getImage());
-                System.out.println("numero: "+contar.nregiones);
+                System.out.println(contar.nregiones);
+                etiqueta.setIcon(imgs[contar.nregiones]);
 	}
         
         @Override

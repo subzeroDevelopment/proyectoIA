@@ -104,7 +104,7 @@ public class Regiones {
             }
          }
         // System.out.println("cout="+cout);
-         if(cout>=15000 && cout<=23000)areas.add(cout);
+         if(cout>=10000)areas.add(cout);
          cout=0;
        }
          
