@@ -44,7 +44,7 @@ public class Binarizar extends JHFilter{
                 //Cambiamos a formato sRGB
                 
                 //Asignamos el nuevo valor al BufferedImage
-                if(mediaPixel<=100 && mediaPixel>81)dst.setRGB(i, j,0);
+                if(mediaPixel<=100 && mediaPixel>50)dst.setRGB(i, j,0);
                 else{
                     color=(255 << 16) | (255 << 8) | 255;
                     dst.setRGB(i, j,color);
